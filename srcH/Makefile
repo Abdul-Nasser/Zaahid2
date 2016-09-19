@@ -23,7 +23,7 @@ PREFIX = /usr/local
 BINDIR = $(PREFIX)/bin
 
 ### Built-in landmark for pgo-builds
-PGO86640 = ./$(EXE) 86640 16 1 1000 default time
+PGO86640 = ./$(EXE) bench
 
 ### Object files
 OBJS = bench.o bitbases.o bitlist.o booklet.o endgames.o evaluation.o major.o \
