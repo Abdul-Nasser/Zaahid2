@@ -665,6 +665,8 @@ namespace {
             update_stats(pos, ss, ttMove, depth, nullptr, 0);
 
 
+
+
         return ttValue;
     }
 
@@ -1149,6 +1151,8 @@ moves_loop: // When in check search starts from here
 
 
 
+
+
     // Bonus for prior countermove that caused the fail low
     else if (    depth >= 3 * ONE_PLY
              && !bestMove
@@ -1618,6 +1622,9 @@ bool RootMove::extract_ponder_from_tt(Position& pos)
     bool ttHit;
 
     assert(pv.size() == 1);
+
+    if (!pv[0])
+        return false;
 
     pos.do_move(pv[0], st, pos.gives_check(pv[0], CheckInfo(pos)));
     TTEntry* tte = TT.probe(pos.key(), ttHit);
