@@ -928,14 +928,13 @@ moves_loop: // When in check search starts from here
       newDepth = depth - ONE_PLY + extension;
 
       // Step 13. Pruning at shallow depth
-      if (  !rootNode          
-          &&  bestValue > VALUE_MATED_IN_MAX_PLY)
+      if (   !rootNode
+          && !captureOrPromotion
+          && !inCheck
+          && !givesCheck
+          &&  bestValue > VALUE_MATED_IN_MAX_PLY
+          && !pos.advanced_pawn_push(move))
       {
-          if (   !captureOrPromotion
-              && !givesCheck
-			  && !inCheck
-              && !pos.advanced_pawn_push(move))
-          {
           // Move count based pruning
           if (moveCountPruning)
               continue;
