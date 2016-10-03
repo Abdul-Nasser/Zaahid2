@@ -665,8 +665,6 @@ namespace {
             update_stats(pos, ss, ttMove, depth, nullptr, 0);
 
 
-
-
         return ttValue;
     }
 
@@ -930,13 +928,14 @@ moves_loop: // When in check search starts from here
       newDepth = depth - ONE_PLY + extension;
 
       // Step 13. Pruning at shallow depth
-      if (   !rootNode
-          && !captureOrPromotion
-          && !inCheck
-          && !givesCheck
-          &&  bestValue > VALUE_MATED_IN_MAX_PLY
-          && !pos.advanced_pawn_push(move))
+      if (  !rootNode          
+          &&  bestValue > VALUE_MATED_IN_MAX_PLY)
       {
+          if (   !captureOrPromotion
+              && !givesCheck
+			  && !inCheck
+              && !pos.advanced_pawn_push(move))
+          {
           // Move count based pruning
           if (moveCountPruning)
               continue;
@@ -1145,8 +1144,6 @@ moves_loop: // When in check search starts from here
     // Quiet best move: update killers, history and countermoves
     else if (bestMove && !pos.capture_or_promotion(bestMove))
         update_stats(pos, ss, bestMove, depth, quietsSearched, quietCount);
-
-
 
 
 
