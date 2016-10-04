@@ -374,6 +374,7 @@ namespace {
 
     const Color Them = (Us == WHITE ? BLACK   : WHITE);
     const Square  Up = (Us == WHITE ? DELTA_N : DELTA_S);
+	const int twoBishops = 2 * int(BishopValueMg);
 
     Bitboard undefended, pinned, b, b1, b2, safe, other;
     int attackUnits;
@@ -463,9 +464,8 @@ namespace {
             score -= OtherCheck;
 
         // Compute king danger score and subtract from the evaluation.
-        attackUnits = std::max(std::min(attackUnits, MaxUnits), 0);
-        score -= make_score(attackUnits <= QuadUnits ? attackUnits * attackUnits / (QuadUnits * 2)
-                                                     : attackUnits - (QuadUnits / 2), 0);
+        int A = std::max(attackUnits, 0);
+        score -= make_score( std::min( A * A / 4096 , twoBishops) , 0);
     }
     if (DoTrace)
         Trace::add(KING, Us, score);
