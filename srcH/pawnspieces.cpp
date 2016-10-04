@@ -26,10 +26,6 @@ namespace {
   // Backward pawn penalty by opposed flag
   const Score Backward[2] = { S(67, 42), S(49, 24) };
 
-  // Unsupported pawn penalty for pawns which are neither isolated or backward,
-  // by number of pawns it supports [less than 2 / exactly 2].
-  const Score Unsupported[2] = { S(20, 10), S(25, 15) };
-
   // Connected pawn bonus by opposed, phalanx, twice supported and rank
   Score Connected[2][2][2][RANK_NB];
 
@@ -155,9 +151,6 @@ namespace {
 
         else if (backward)
             score -= Backward[opposed];
-
-        else if (!supported)
-            score -= Unsupported[more_than_one(neighbours & pawnAttacksBB[s])];
 
         if (connected)
             score += Connected[opposed][!!phalanx][more_than_one(supported)][relative_rank(Us, s)];
