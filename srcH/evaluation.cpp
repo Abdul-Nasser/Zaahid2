@@ -404,13 +404,13 @@ namespace {
         // number and types of the enemy's attacking pieces, the number of
         // attacked and undefended squares around our king and the quality of
         // the pawn shelter (current 'score' value).
-        attackUnits =  std::min(900, ei.kingAttackersCount[Them] * ei.kingAttackersWeight[Them])
-                     + 200 * ei.kingAdjacentZoneAttacksCount[Them]
-                     + 410* popcount(undefended)
+        attackUnits =  std::min(995, ei.kingAttackersCount[Them] * ei.kingAttackersWeight[Them])
+                     + 215 * ei.kingAdjacentZoneAttacksCount[Them]
+                     + 510* popcount(undefended)
                      + 130 * popcount(b)
                      + 120 * (popcount(b) + !!pinned)
 
-                     - !pos.count<QUEEN>(Them) * 670;
+                     - !pos.count<QUEEN>(Them) * 700;
                      -  7 * mg_value(score) / 5 - 5;
         // Analyse the enemy's safe queen contact checks. Firstly, find the
         // undefended squares around the king reachable by the enemy queen...
