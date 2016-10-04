@@ -665,6 +665,10 @@ namespace {
             update_stats(pos, ss, ttMove, depth, nullptr, 0);
 
 
+
+
+
+
         return ttValue;
     }
 
@@ -965,6 +969,21 @@ moves_loop: // When in check search starts from here
               continue;
       }
 
+      else if(
+	      
+	          depth < 3 * ONE_PLY
+              && !inCheck
+	      &&  bestValue > VALUE_MATED_IN_MAX_PLY
+	      && !rootNode
+	      && (  captureOrPromotion
+		  || givesCheck
+		  || pos.advanced_pawn_push(move)
+		  )
+	      && pos.see_sign(move) < VALUE_ZERO
+	  )
+	{
+	    continue;
+	}
       // Speculative prefetch as early as possible
       prefetch(TT.first_entry(pos.key_after(move)));
 
@@ -1145,9 +1164,6 @@ moves_loop: // When in check search starts from here
     // Quiet best move: update killers, history and countermoves
     else if (bestMove && !pos.capture_or_promotion(bestMove))
         update_stats(pos, ss, bestMove, depth, quietsSearched, quietCount);
-
-
-
 
     // Bonus for prior countermove that caused the fail low
     else if (    depth >= 3 * ONE_PLY
